@@ -1,21 +1,41 @@
-let plantName, plantNote, addToGarden, cancel;
+let plantNameEl, plantNoteEl, addToGarden, cancel;
+let settingsKey = 'settings'
 
 function init() {
-    plantName = document.getElementById("plantNameInput").value;
-    plantNote = document.getElementById("noteInput").value;
+    plantNameEl = document.getElementById("plantNameInput");
+    plantNoteEl = document.getElementById("noteInput");
     addToGarden = document.getElementById("addToGarden");
     cancel = document.getElementById("cancel");
-}
-function addTo() {
-    console.log("hello")
-    const objectArray = [];
 
-    const objectItem = {
-        Name: plantName,
-        Notes: plantNote,
+    console.log(localStorage.getItem(settingsKey))
+}
+
+function saveSettings() {
+    console.log("hello")
+
+    const settingsJSON = {
+        name: plantNameEl.value,
+        notes: plantNoteEl.value,
     }
 
-    objectArray.push(objectItem);
-    const json = JSON.stringify(objectArray)
-    localStorage.setItem("info", json);
+    const jsonString = JSON.stringify(settingsJSON)
+    localStorage.setItem(settingsKey, jsonString);
+}
+
+function wipeSettings() {
+    console.log("Wipe storage")
+
+    const jsonString = localStorage.getItem(settingsKey)
+
+    if (jsonString) {
+        console.log(jsonString)
+        const settingsJSON = JSON.parse(jsonString)
+
+
+        settingsJSON.name = ""
+        settingsJSON.notes = ""
+
+        const newJsonString = JSON.stringify(settingsJSON)
+        localStorage.setItem(settingsKey, newJsonString);
+    }
 }

@@ -8,6 +8,14 @@ function init() {
     cancel = document.getElementById("cancel");
 
     console.log(localStorage.getItem(settingsKey))
+    getSettings()
+}
+
+function getSettings() {
+    const jsonString = localStorage.getItem(settingsKey)
+    const settingsJSON = JSON.parse(jsonString)
+
+    plantNameEl.value = settingsJSON.name
 }
 
 function saveSettings() {
@@ -29,13 +37,18 @@ function wipeSettings() {
 
     if (jsonString) {
         console.log(jsonString)
+        // parse json string and
         const settingsJSON = JSON.parse(jsonString)
 
-
+        // reset properties
         settingsJSON.name = ""
         settingsJSON.notes = ""
 
+        // stringify settings json and update local storage
         const newJsonString = JSON.stringify(settingsJSON)
         localStorage.setItem(settingsKey, newJsonString);
+
+        // reset values of the HTML elements
+        plantNameEl.value = ""
     }
 }

@@ -4,25 +4,35 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="all.css">
-    <script src="/src/script.js"></script>
+
 </head>
 <body onload="init()">
-<p class="bg-amber-700">hello</p>
-
-
-<form>
-    <div class="grid gap-6 mb-6">
+<form id="plantForm" class="pl-20 bg-amber-100 w-2/4">
+    <div class="grid gap-6 mb-6 pt-20">
         <div>
             <label for="plantNameInput" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Plant name</label>
             <input type="text" id="plantNameInput" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Philodendron Pink Princess" required />
         </div>
         <div>
             <label for="noteInput" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Notes</label>
-            <input type="text" id="noteInput" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/4 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write about your latest journey with planting. Did a new leaf grow? Did you hydrate it enough?" required />
+            <input type="text" id="noteInput" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-2/4 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write about your latest journey with planting. Did a new leaf grow? Did you hydrate it enough?" required />
         </div>
     </div>
+
+    <button id="addToGarden" onclick="saveSettings()" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add to My Garden</button>
+    <button id="cancel" onclick="wipeInputForm()" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Cancel</button>
 </form>
-<button id="addToGarden" onclick="saveSettings()" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">"Add to My Garden</button>
-<button id="cancel" onclick="wipeSettings()" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Cancel</button>
+<ul id="plant-list"  class="bg-pink-500 w-1/4 ">
+
+</ul>
+
+<!-- This is the myGarden section -->
+<div>My Garden
+<div id="myGarden" class="my-garden">
+</div>
+<button id="wipeMyGarden" onclick="wipeMyGarden()" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Cancel</button>
+</div>
+
+<script src="/src/script.js"></script>
 </body>
 </html>

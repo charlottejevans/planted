@@ -1,13 +1,17 @@
-let plantNameEl, plantNoteEl, addToGarden, cancel, reminderAlert;
+let plantNameEl, plantNoteEl, addToGarden, cancel, reminderAlert, localStorageCheck;
 let settingsKey = 'settings'
 let reminderName = localStorage.getItem(settingsKey)
 // initiating the HTML elements the moment the page is loaded.
 function init() {
-    plantNameEl = document.getElementById("plantNameInput");
-    plantNoteEl = document.getElementById("noteInput");
-    addToGarden = document.getElementById("addToGarden");
-    cancel = document.getElementById("cancel");
+    plantNameEl = document.getElementById("plantNameInput")
+    plantNoteEl = document.getElementById("noteInput")
+    addToGarden = document.getElementById("addToGarden")
+    cancel = document.getElementById("cancel")
 
+    // Checks to see if the local storage is empty or not. If it is empty, it will display a message saying that the garden is empty. If it is not empty, it will display a message saying that the garden is not empty.
+    const isLocalStorageEmpty = localStorage.getItem(settingsKey) ? false : true;
+    const localStorageCheckElement = document.getElementById("isLocalStorageEmpty");
+    localStorageCheckElement.textContent = isLocalStorageEmpty ? "Your garden is empty." : "Your garden is not empty.";
     console.log(localStorage.getItem(settingsKey))
     getSettings()
 }
@@ -20,9 +24,9 @@ function getSettings() {
     const jsonString = localStorage.getItem(settingsKey)
     // if there is any previous input, it will parse the info and create a variable called combinedInfo using concatenation. Afterward, it will trigger update Mygarden function.
     if (jsonString) {
-        const settingsJSON = JSON.parse(jsonString);
-        const combinedInfo = settingsJSON.name + ': ' + settingsJSON.notes;
-        updateMyGarden(combinedInfo);
+        const settingsJSON = JSON.parse(jsonString)
+        const combinedInfo = settingsJSON.name + ': ' + settingsJSON.notes
+        updateMyGarden(combinedInfo)
 
     } else {
         console.log("No settings found in localStorage.");

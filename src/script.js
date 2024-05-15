@@ -1,6 +1,6 @@
-let plantNameEl, plantNoteEl, addToGarden, cancel;
+let plantNameEl, plantNoteEl, addToGarden, cancel, reminderAlert;
 let settingsKey = 'settings'
-
+let reminderName = localStorage.getItem(settingsKey)
 // initiating the HTML elements the moment the page is loaded.
 function init() {
     plantNameEl = document.getElementById("plantNameInput");
@@ -12,6 +12,9 @@ function init() {
     getSettings()
 }
 
+
+
+
 // retrieves the info from localstorage using the settings key and parses it into a JSON string object.
 function getSettings() {
     const jsonString = localStorage.getItem(settingsKey)
@@ -20,6 +23,7 @@ function getSettings() {
         const settingsJSON = JSON.parse(jsonString);
         const combinedInfo = settingsJSON.name + ': ' + settingsJSON.notes;
         updateMyGarden(combinedInfo);
+
     } else {
         console.log("No settings found in localStorage.");
     }
@@ -57,6 +61,11 @@ function saveSettings() {
 
         plantNameEl.value = ""
         plantNoteEl.value = ""
+        /* Once info is added to LS, triggers a reminder to ask whether they have watered their plant using string interpolation. */
+        const storedSettings = JSON.parse(localStorage.getItem(settingsKey));
+        reminderName = storedSettings.name
+        reminderAlert = `Have you watered your ${reminderName} today?`
+        document.getElementById("reminder").innerHTML = reminderAlert;
     } else {
         alert("Information is missing.")
     }

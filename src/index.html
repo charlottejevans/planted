@@ -2,39 +2,35 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>My Garden Planner</title>
     <link rel="stylesheet" href="all.css">
 
 </head>
-<body onload="init()">
-<form id="plantForm" class="pl-20 bg-amber-100 w-2/4">
-    <div class="grid gap-6 mb-6 pt-20">
-        <div>
-            <label for="plantNameInput" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Plant name</label>
-            <input type="text" id="plantNameInput" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Philodendron Pink Princess" required />
+<body class="bg-green-100" onload="init()">
+<div class="container mx-auto p-5">
+    <form id="plantForm" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <div class="mb-4">
+            <label for="plantNameInput" class="block text-gray-700 text-sm font-bold mb-2">Plant name</label>
+            <input type="text" id="plantNameInput" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Philodendron Pink Princess" required />
         </div>
-        <div>
-            <label for="noteInput" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Notes</label>
-            <input type="text" id="noteInput" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-2/4 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write about your latest journey with planting. Did a new leaf grow? Did you hydrate it enough?" required />
+        <div class="mb-6">
+            <label for="noteInput" class="block text-gray-700 text-sm font-bold mb-2">Notes</label>
+            <textarea id="noteInput" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Write about your latest journey with planting. Did a new leaf grow? Did you hydrate it enough?" required></textarea>
         </div>
+        <div class="flex items-center justify-between">
+            <button id="addToGarden" onclick="saveSettings()" type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Add to My Garden</button>
+            <button id="cancel" onclick="wipeInputForm()" type="button" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Cancel</button>
+        </div>
+    </form>
+    <p id="reminder" class="text-center text-lg text-green-800"></p>
+    <div class="my-garden bg-white shadow-md rounded px-8 pt-6 pb-8 mt-4">
+        <h2 class="text-gray-700 text-xl font-bold mb-2">My Garden</h2>
+        <div id="myGarden" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <!-- Dynamically add plants here -->
+        </div>
+        <button id="wipeMyGarden" onclick="wipeMyGarden()" type="button" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-4">Clear My Garden</button>
     </div>
-
-    <button id="addToGarden" onclick="saveSettings()" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add to My Garden</button>
-    <button id="cancel" onclick="wipeInputForm()" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Cancel</button>
-</form>
-<ul id="plant-list"  class="bg-pink-500 w-1/4 ">
-
-</ul>
-
-<p id="reminder"></p>
-
-<!-- This is the myGarden section -->
-<div>My Garden
-<div id="myGarden" class="my-garden">
 </div>
-<button id="wipeMyGarden" onclick="wipeMyGarden()" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Cancel</button>
-</div>
-
 <script src="/src/script.js"></script>
 </body>
 </html>

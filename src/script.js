@@ -61,7 +61,7 @@ function saveSettings() {
 
         plantNameEl.value = ""
         plantNoteEl.value = ""
-        /* Once info is added to LS, triggers a reminder to ask whether they have watered their plant using string interpolation. */
+        // Once info is added to LS, triggers a reminder to ask whether they have watered their plant using string interpolation.
         const storedSettings = JSON.parse(localStorage.getItem(settingsKey));
         reminderName = storedSettings.name
         reminderAlert = `Have you watered your ${reminderName} today?`

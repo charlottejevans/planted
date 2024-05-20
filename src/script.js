@@ -1,4 +1,4 @@
-let plantNameEl, plantNoteEl, addToGarden, cancel, reminderAlert, localStorageCheck;
+let plantNameEl, plantNoteEl, addToGarden, cancel, reminderAlert, localStorageCheck, waterReminder;
 let settingsKey = 'settings'
 let reminderName = localStorage.getItem(settingsKey)
 // initiating the HTML elements the moment the page is loaded.
@@ -7,6 +7,7 @@ function init() {
     plantNoteEl = document.getElementById("noteInput")
     addToGarden = document.getElementById("addToGarden")
     cancel = document.getElementById("cancel")
+    waterReminder = document.getElementById("plantWateringReminder")
 
     // Checks to see if the local storage is empty or not. If it is empty, it will display a message saying that the garden is empty. If it is not empty, it will display a message saying that the garden is not empty.
     const isLocalStorageEmpty = localStorage.getItem(settingsKey) ? false : true;
@@ -109,6 +110,7 @@ const plantNeedsWater = function () {
 
     if (day === 1 || day === 3 ) {
         console.log("Time to water your plants")
+        alert("Time to water your plants")
     }
 }
 

@@ -14,6 +14,8 @@ function init() {
     localStorageCheckElement.textContent = isLocalStorageEmpty ? "Your garden is empty." : "Your garden is not empty.";
     console.log(localStorage.getItem(settingsKey))
     getSettings()
+
+
 }
 
 
@@ -99,3 +101,17 @@ function wipeMyGarden() {
         alert("Your plant has been removed from your garden.")
     }
 }
+
+// Learning how to use function expressions.
+const plantNeedsWater = function () {
+    const today = new Date()
+    const day = today.getDay()
+
+    if (day === 1 || day === 3 ) {
+        console.log("Time to water your plants")
+    }
+}
+
+plantNeedsWater()
+
+

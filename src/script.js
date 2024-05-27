@@ -27,15 +27,24 @@ function getSettings() {
     if (jsonString) {
         const settingsArray = JSON.parse(jsonString)
         settingsArray.forEach(setting => {
-            const combinedInfo = 'Plant Name: ' + setting.name + ': ' + 'Plant Notes: ' + setting.notes + ': ' + 'Plant Category: ' + setting.category
+            const combinedInfo = 'Plant Name: ' + setting.name + ' Plant Notes: ' + setting.notes + ' Plant Category: ' + setting.category
             updateMyGarden(combinedInfo)
-        });
+        })
     } else {
         console.log("No settings found in localStorage.")
     }
 }
 
 function updateMyGarden(combinedInfo) {
+    // Create a new div element to hold the combined information
+    const infoDiv = document.createElement('div')
+    infoDiv.classList.add('bg-gray-100', 'rounded', 'p-4', 'text-gray-800', 'font-medium')
+    infoDiv.textContent = combinedInfo
+
+    // Append the new div to the 'myGarden' div without clearing old content
+    document.getElementById('myGarden').appendChild(infoDiv)
+}
+
     // Create a new div element to hold the combined information
     const infoDiv = document.createElement('div')
     infoDiv.classList.add('bg-gray-100', 'rounded', 'p-4', 'text-gray-800', 'font-medium')
@@ -53,7 +62,6 @@ window.addEventListener('storage', (event) => {
 })
 
 
-
 function saveSettings() {
     if (plantNameEl.value && plantNoteEl.value) {
         console.log("hello")
@@ -63,9 +71,10 @@ function saveSettings() {
             notes: plantNoteEl.value,
             category: plantCategoryEl.value,
         }
-
+        // Array for users information.
         let settingsArray = JSON.parse(localStorage.getItem(settingsKey)) || []
         settingsArray.push(newSetting)
+        console.log(settingsArray)
 
         const jsonString = JSON.stringify(settingsArray)
         localStorage.setItem(settingsKey, jsonString)
@@ -85,10 +94,10 @@ function saveSettings() {
 
 function wipeInputForm() {
 
-    if (plantNameEl.value || plantNoteEl.value ) {
-    console.log("Clearing Input")
-    plantNameEl.value = ""
-    plantNoteEl.value = ""
+    if (plantNameEl.value || plantNoteEl.value) {
+        console.log("Clearing Input")
+        plantNameEl.value = ""
+        plantNoteEl.value = ""
     } else {
         console.log("There is nothing to clear")
         alert("There is nothing to clear.")
@@ -113,7 +122,7 @@ const plantNeedsWater = function () {
     const today = new Date()
     const day = today.getDay()
 
-    if (day === 2 || day === 3 ) { // Monday and Wednesday
+    if (day === 2 || day === 3) { // Monday and Wednesday
         console.log("Time to water your plants")
         alert("Time to water your plants")
     }

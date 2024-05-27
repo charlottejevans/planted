@@ -27,7 +27,7 @@ function getSettings() {
     if (jsonString) {
         const settingsArray = JSON.parse(jsonString)
         settingsArray.forEach(setting => {
-            const combinedInfo = setting.name + ': ' + setting.notes + ': ' + setting.category
+            const combinedInfo = 'Plant Name: ' + setting.name + ': ' + 'Plant Notes: ' + setting.notes + ': ' + 'Plant Category: ' + setting.category
             updateMyGarden(combinedInfo)
         });
     } else {
@@ -38,6 +38,7 @@ function getSettings() {
 function updateMyGarden(combinedInfo) {
     // Create a new div element to hold the combined information
     const infoDiv = document.createElement('div')
+    infoDiv.classList.add('bg-gray-100', 'rounded', 'p-4', 'text-gray-800', 'font-medium')
     infoDiv.textContent = combinedInfo
 
     // Append the new div to the 'myGarden' div without clearing old content

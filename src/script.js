@@ -100,9 +100,9 @@ function wipeMyGarden() {
     const myGardenDiv = document.getElementById('myGarden');
     while (myGardenDiv.firstChild) {
         myGardenDiv.removeChild(myGardenDiv.firstChild);
-        console.log("Your plant has been removed from your garden.")
-        alert("Your plant has been removed from your garden.")
     }
+    console.log("Your plant has been removed from your garden.")
+    alert("Your plant has been removed from your garden.")
 }
 
 // Learning how to use function expressions.

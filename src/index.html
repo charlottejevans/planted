@@ -17,6 +17,14 @@
             <label for="noteInput" class="block text-gray-700 text-sm font-bold mb-2">Notes</label>
             <textarea id="noteInput" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Write about your latest journey with planting. Did a new leaf grow? Did you hydrate it enough?" required></textarea>
         </div>
+        <label for="plantCategory">Category:</label>
+        <select id="plantCategory">
+            <option value="succulent">Succulent</option>
+            <option value="fern">Fern</option>
+            <option value="cactus">Cactus</option>
+            <option value="flowering">Flowering</option>
+            <!-- Add more options as needed -->
+        </select>
         <div class="flex items-center justify-between">
             <button id="addToGarden" onclick="saveSettings()" type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Add to My Garden</button>
             <button id="cancel" onclick="wipeInputForm()" type="button" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Cancel</button>

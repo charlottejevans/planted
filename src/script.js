@@ -1,6 +1,7 @@
 let plantNameEl, plantNoteEl, plantCategoryEl, addToGarden, cancel, waterReminder;
 let settingsKey = 'settings'
 let reminderName = localStorage.getItem(settingsKey)
+// Array to access the information from local storage.
 let settingsArray = JSON.parse(localStorage.getItem(settingsKey)) || []
 
 console.log(settingsArray)
@@ -15,8 +16,8 @@ function init() {
     plantCategoryEl = document.getElementById("plantCategory")
 
     // Checks to see if the local storage is empty or not. If it is empty, it will display a message saying that the garden is empty. If it is not empty, it will display a message saying that the garden is not empty.
-    const isLocalStorageEmpty = localStorage.getItem(settingsKey) ? false : true;
-    const localStorageCheckElement = document.getElementById("isLocalStorageEmpty");
+    const isLocalStorageEmpty = localStorage.getItem(settingsKey) ? false : true
+    const localStorageCheckElement = document.getElementById("isLocalStorageEmpty")
     localStorageCheckElement.textContent = isLocalStorageEmpty ? "Your garden is empty." : ""
     console.log(localStorage.getItem(settingsKey))
     getSettings()
@@ -31,23 +32,56 @@ function getSettings() {
         settingsArray = JSON.parse(jsonString)
         settingsArray.forEach(newSetting => {
             const combinedInfo = 'Plant Name: ' + newSetting.name + ', Plant Notes: ' + newSetting.notes + ', Plant Category: ' + newSetting.category
-            updateMyGarden(combinedInfo)
+            updateMyGarden()
         })
     } else {
         console.log("No settings found in localStorage.")
     }
 }
 
-function updateMyGarden(combinedInfo) {
-    // Create a new div element to hold the combined information
-    const infoDiv = document.createElement('div')
-    infoDiv.classList.add('bg-gray-100', 'rounded', 'p-4', 'text-gray-800', 'font-medium')
-    infoDiv.textContent = combinedInfo
+// Updates the UI with the new plant information by creating a new div element and appending the information to the infoDiv.
+function updateMyGarden() {
+    // Clears existing content and places value back to an empty string.
+    document.getElementById('myGarden').innerHTML = ""
 
-    // Append the new div to the 'myGarden' div without clearing old content
-    document.getElementById('myGarden').appendChild(infoDiv)
+    // Creates a Set to keep track of unique plant names and avoid duplicates
+    const uniquePlantNames = new Set()
+
+    settingsArray.forEach(setting => {
+        // Check if the plant name is already in the Set
+        if (!uniquePlantNames.has(setting.name)) {
+            // Add the plant name to the Set to mark it as seen
+            uniquePlantNames.add(setting.name)
+
+            // Create a new div element to hold the information
+            const infoDiv = document.createElement('div')
+            infoDiv.classList.add('bg-gray-100', 'rounded', 'p-4', 'text-gray-800', 'font-medium')
+
+            // Create a heading for the name
+            const nameHeading = document.createElement('h3')
+            nameHeading.classList.add('text-lg', 'font-bold', 'mb-2')
+            nameHeading.textContent = setting.name
+
+            // Creates a paragraph for the notes
+            const notesParagraph = document.createElement('p')
+            notesParagraph.classList.add('mb-2')
+            notesParagraph.textContent = setting.notes
+
+            // Creates a paragraph for the category
+            const categoryDropDown = document.createElement('p')
+            categoryDropDown.classList.add('mb-2')
+            categoryDropDown.textContent = setting.category
+
+            // Appends the data to the infoDiv
+            infoDiv.appendChild(nameHeading)
+            infoDiv.appendChild(notesParagraph)
+            infoDiv.appendChild(categoryDropDown)
+
+            // Append the new div to the 'myGarden' div
+            document.getElementById('myGarden').appendChild(infoDiv)
+        }
+    })
 }
-
 
 
 // Listen for changes to the 'localStorage' and adds them to the page.
@@ -59,30 +93,36 @@ window.addEventListener('storage', (event) => {
 
 
 function saveSettings() {
-    if (plantNameEl.value && plantNoteEl.value) {
+    if (plantNameEl.value && plantNoteEl.value && plantCategoryEl.value) {
         const newSetting = {
             name: plantNameEl.value,
             notes: plantNoteEl.value,
             category: plantCategoryEl.value,
         }
 
-        // Array for users information.
-        settingsArray.push(newSetting)
-        console.log(settingsArray)
+        // Check if the plant is already in the settingsArray
+        const isDuplicate = settingsArray.some(setting => setting.name === newSetting.name)
+        // Only runs if the plant is not a duplicate.
+        if (!isDuplicate) {
+            // Add the new plant to the settingsArray
+            settingsArray.push(newSetting)
+            console.log(settingsArray)
+            // JSON stringifies the info.
+            const jsonString = JSON.stringify(settingsArray)
+            localStorage.setItem(settingsKey, jsonString)
 
-        const jsonString = JSON.stringify(settingsArray)
-        localStorage.setItem(settingsKey, jsonString)
+            // Once info is added to LS, triggers a reminder to ask whether they have watered their plant using string interpolation.
+            const reminderAlert = `Have you watered your ${newSetting.name} today?`
+            document.getElementById("reminder").innerHTML = reminderAlert
 
-        // Updates UI with new plant information.
-        updateMyGarden(`Plant Name: ${newSetting.name}, Plant Notes: ${newSetting.notes}, Plant Category: ${newSetting.category}`)
-        plantNameEl.value = ""
-        plantNoteEl.value = ""
+            // Updates UI with new plant information after ensuring it's not a duplicate.
+            updateMyGarden()
 
-
-        // Once info is added to LS, triggers a reminder to ask whether they have watered their plant using string interpolation.
-        const reminderName = newSetting.name
-        const reminderAlert = `Have you watered your ${reminderName} today?`
-        document.getElementById("reminder").innerHTML = reminderAlert
+            plantNameEl.value = ""
+            plantNoteEl.value = ""
+        } else {
+            alert("This plant is already in your garden.")
+        }
     } else {
         alert("Information is missing.")
     }
@@ -96,7 +136,7 @@ function wipeInputForm() {
         plantNameEl.value = ""
         plantNoteEl.value = ""
     } else {
-        console.log("There is nothing to clear")
+        console.log("There is nothing to clear.")
         alert("There is nothing to clear.")
     }
 }
@@ -128,5 +168,9 @@ const plantNeedsWater = function () {
 }
 
 
-
-
+/* const combinedInfo = `
+<div class="bg-gray-100 rounded p-4 text-gray-800 font-medium">
+    <p class="font-bold text-lg mb-2">Plant Name: ${newSetting.name}</p>
+    <p class="text-gray-700 text-base mb-2">Plant Notes: ${newSetting.notes}</p>
+    <p class="text-gray-500 text-sm">Plant Category: ${newSetting.category}</p>
+</div>`; */

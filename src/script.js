@@ -4,7 +4,8 @@ let reminderName = localStorage.getItem(settingsKey)
 // Array to access the information from local storage.
 let settingsArray = JSON.parse(localStorage.getItem(settingsKey)) || []
 
-console.log(settingsArray)
+
+console.log('Combined Plants: ',settingsArray)
 
 // initiating the HTML elements the moment the page is loaded.
 function init() {
@@ -19,7 +20,7 @@ function init() {
     const isLocalStorageEmpty = localStorage.getItem(settingsKey) ? false : true
     const localStorageCheckElement = document.getElementById("isLocalStorageEmpty")
     localStorageCheckElement.textContent = isLocalStorageEmpty ? "Your garden is empty." : ""
-    console.log(localStorage.getItem(settingsKey))
+    // console.log(localStorage.getItem(settingsKey))
     getSettings()
     plantNeedsWater()
 }
@@ -34,6 +35,10 @@ function getSettings() {
             const combinedInfo = 'Plant Name: ' + newSetting.name + ', Plant Notes: ' + newSetting.notes + ', Plant Category: ' + newSetting.category
             updateMyGarden()
         })
+        cactusPlantsCheck()
+        succulentPlantsCheck()
+        flowerPlantsCheck()
+        fernPlantsCheck()
     } else {
         console.log("No settings found in localStorage.")
     }
@@ -117,6 +122,10 @@ function saveSettings() {
 
             // Updates UI with new plant information after ensuring it's not a duplicate.
             updateMyGarden()
+            cactusPlantsCheck()
+            succulentPlantsCheck()
+            flowerPlantsCheck()
+            fernPlantsCheck()
 
             plantNameEl.value = ""
             plantNoteEl.value = ""
@@ -168,9 +177,29 @@ const plantNeedsWater = function () {
 }
 
 
-/* const combinedInfo = `
-<div class="bg-gray-100 rounded p-4 text-gray-800 font-medium">
-    <p class="font-bold text-lg mb-2">Plant Name: ${newSetting.name}</p>
-    <p class="text-gray-700 text-base mb-2">Plant Notes: ${newSetting.notes}</p>
-    <p class="text-gray-500 text-sm">Plant Category: ${newSetting.category}</p>
-</div>`; */
+// Checks whether the plant is a cactus or not.
+function cactusPlantsCheck() {
+    let cactusPlants = settingsArray.filter(plant => plant.category === "cactus")
+    console.log('Cactus Plants: ',cactusPlants)
+    return cactusPlants
+}
+
+
+function succulentPlantsCheck() {
+    let succulentPlants = settingsArray.filter(plant => plant.category === "succulent")
+    console.log('Succulent Plants: ', succulentPlants)
+    return succulentPlants
+}
+
+function flowerPlantsCheck() {
+    let flowerPlants = settingsArray.filter(plant => plant.category === "flowering")
+    console.log('Flowering Plants: ',flowerPlants)
+    return flowerPlants
+}
+
+function fernPlantsCheck() {
+    let fernPlants = settingsArray.filter(plant => plant.category === "fern")
+    console.log('Fern Plants: ',fernPlants)
+    return fernPlants
+}
+

@@ -1,11 +1,7 @@
 let plantNameEl, plantNoteEl, plantCategoryEl, addToGarden, cancel, waterReminder;
 let settingsKey = 'settings'
-let reminderName = localStorage.getItem(settingsKey)
-// Array to access the information from local storage.
-let settingsArray = JSON.parse(localStorage.getItem(settingsKey)) || []
+let settingsArray = JSON.parse(localStorage.getItem(settingsKey)) || [] // Array to access the information from local storage.
 
-
-console.log('Combined Plants: ',settingsArray)
 
 // initiating the HTML elements the moment the page is loaded.
 function init() {
@@ -20,7 +16,6 @@ function init() {
     const isLocalStorageEmpty = localStorage.getItem(settingsKey) ? false : true
     const localStorageCheckElement = document.getElementById("isLocalStorageEmpty")
     localStorageCheckElement.textContent = isLocalStorageEmpty ? "Your garden is empty." : ""
-    // console.log(localStorage.getItem(settingsKey))
     getSettings()
     plantNeedsWater()
 }
@@ -35,10 +30,12 @@ function getSettings() {
             const combinedInfo = 'Plant Name: ' + newSetting.name + ', Plant Notes: ' + newSetting.notes + ', Plant Category: ' + newSetting.category
             updateMyGarden()
         })
+        console.log('Combined Plants: ', settingsArray)
         cactusPlantsCheck()
         succulentPlantsCheck()
         flowerPlantsCheck()
         fernPlantsCheck()
+
     } else {
         console.log("No settings found in localStorage.")
     }
@@ -74,7 +71,7 @@ function updateMyGarden() {
 
             // Creates a paragraph for the category
             const categoryDropDown = document.createElement('p')
-            categoryDropDown.classList.add('mb-2')
+            categoryDropDown.classList.add('mb-2', 'flex', 'items-end', 'justify-end')
             categoryDropDown.textContent = setting.category
 
             // Appends the data to the infoDiv
@@ -111,7 +108,6 @@ function saveSettings() {
         if (!isDuplicate) {
             // Add the new plant to the settingsArray
             settingsArray.push(newSetting)
-            console.log(settingsArray)
             // JSON stringifies the info.
             const jsonString = JSON.stringify(settingsArray)
             localStorage.setItem(settingsKey, jsonString)
@@ -122,6 +118,7 @@ function saveSettings() {
 
             // Updates UI with new plant information after ensuring it's not a duplicate.
             updateMyGarden()
+            console.log('Combined Plants: ', settingsArray)
             cactusPlantsCheck()
             succulentPlantsCheck()
             flowerPlantsCheck()
@@ -179,27 +176,27 @@ const plantNeedsWater = function () {
 
 // Checks whether the plant is a cactus or not.
 function cactusPlantsCheck() {
-    let cactusPlants = settingsArray.filter(plant => plant.category === "cactus")
-    console.log('Cactus Plants: ',cactusPlants)
+    let cactusPlants = settingsArray.filter(plant => plant.category === "Cactus")
+    console.log('Cactus Plants: ', cactusPlants)
     return cactusPlants
 }
 
 
 function succulentPlantsCheck() {
-    let succulentPlants = settingsArray.filter(plant => plant.category === "succulent")
+    let succulentPlants = settingsArray.filter(plant => plant.category === "Succulent")
     console.log('Succulent Plants: ', succulentPlants)
     return succulentPlants
 }
 
 function flowerPlantsCheck() {
-    let flowerPlants = settingsArray.filter(plant => plant.category === "flowering")
-    console.log('Flowering Plants: ',flowerPlants)
+    let flowerPlants = settingsArray.filter(plant => plant.category === "Flowering")
+    console.log('Flowering Plants: ', flowerPlants)
     return flowerPlants
 }
 
 function fernPlantsCheck() {
-    let fernPlants = settingsArray.filter(plant => plant.category === "fern")
-    console.log('Fern Plants: ',fernPlants)
+    let fernPlants = settingsArray.filter(plant => plant.category === "Fern")
+    console.log('Fern Plants: ', fernPlants)
     return fernPlants
 }
 

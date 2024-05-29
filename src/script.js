@@ -93,7 +93,6 @@ window.addEventListener('storage', (event) => {
     }
 })
 
-
 function saveSettings() {
     if (plantNameEl.value && plantNoteEl.value && plantCategoryEl.value) {
         const newSetting = {
@@ -173,29 +172,30 @@ const plantNeedsWater = function () {
     }
 }
 
+// Getting the plants by category - Global Variables
+let fernPlants = settingsArray.filter(plant => plant.category === "fern")
+let cactusPlants = settingsArray.filter(plant => plant.category === "cactus")
+let succulentPlants = settingsArray.filter(plant => plant.category === "succulent")
+let flowerPlants = settingsArray.filter(plant => plant.category === "flowering")
 
 // Checks whether the plant is a cactus or not.
 function cactusPlantsCheck() {
-    let cactusPlants = settingsArray.filter(plant => plant.category === "cactus")
     console.log('Cactus Plants: ', cactusPlants)
     return cactusPlants
 }
 
 
 function succulentPlantsCheck() {
-    let succulentPlants = settingsArray.filter(plant => plant.category === "succulent")
     console.log('Succulent Plants: ', succulentPlants)
     return succulentPlants
 }
 
 function flowerPlantsCheck() {
-    let flowerPlants = settingsArray.filter(plant => plant.category === "flowering")
     console.log('Flowering Plants: ', flowerPlants)
     return flowerPlants
 }
 
 function fernPlantsCheck() {
-    let fernPlants = settingsArray.filter(plant => plant.category === "fern")
     console.log('Fern Plants: ', fernPlants)
     return fernPlants
 }

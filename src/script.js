@@ -176,27 +176,36 @@ const plantNeedsWater = function () {
 
 // Checks whether the plant is a cactus or not.
 function cactusPlantsCheck() {
-    let cactusPlants = settingsArray.filter(plant => plant.category === "Cactus")
+    let cactusPlants = settingsArray.filter(plant => plant.category === "cactus")
     console.log('Cactus Plants: ', cactusPlants)
     return cactusPlants
 }
 
 
 function succulentPlantsCheck() {
-    let succulentPlants = settingsArray.filter(plant => plant.category === "Succulent")
+    let succulentPlants = settingsArray.filter(plant => plant.category === "succulent")
     console.log('Succulent Plants: ', succulentPlants)
     return succulentPlants
 }
 
 function flowerPlantsCheck() {
-    let flowerPlants = settingsArray.filter(plant => plant.category === "Flowering")
+    let flowerPlants = settingsArray.filter(plant => plant.category === "flowering")
     console.log('Flowering Plants: ', flowerPlants)
     return flowerPlants
 }
 
 function fernPlantsCheck() {
-    let fernPlants = settingsArray.filter(plant => plant.category === "Fern")
+    let fernPlants = settingsArray.filter(plant => plant.category === "fern")
     console.log('Fern Plants: ', fernPlants)
     return fernPlants
 }
+
+// NavBar Links to Scroll to Sections
+document.getElementById('myGardenNavBar').addEventListener('click', function(event) {
+    event.preventDefault()
+    document.getElementById('myGardenSection').scrollIntoView({ behavior: 'smooth' })})
+
+document.getElementById('addNavBar').addEventListener('click', function(event) {
+    event.preventDefault()
+    document.getElementById('addPlantsForm').scrollIntoView({ behavior: 'smooth' })})
 

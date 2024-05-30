@@ -20,6 +20,13 @@ function init() {
     plantNeedsWater()
 }
 
+// Listen for changes to the 'localStorage' and adds them to the page.
+window.addEventListener('storage', (event) => {
+    if (event.key === 'settingsKey') {
+        getSettings()
+    }
+})
+
 // retrieves the info from localstorage using the settings key and parses it into a JSON string object.
 function getSettings() {
     const jsonString = localStorage.getItem(settingsKey)
@@ -54,6 +61,7 @@ function updateMyGarden() {
         }
     })
 }
+
 // Clears the garden by setting the innerHTML of the myGarden div to an empty string.
 function clearGarden() {
     document.getElementById('myGarden').innerHTML = ""
@@ -78,6 +86,7 @@ function createPlantDiv(setting, index) {
     return infoDiv
 
 }
+
 // Creates a new element with the specified tag, classes, and text content.
 function createElement(tag, classList, textContent) {
     // Creates a new element with the specified tag.
@@ -113,13 +122,6 @@ function loggingPlants() {
     flowerPlantsCheck()
     fernPlantsCheck()
 }
-
-// Listen for changes to the 'localStorage' and adds them to the page.
-window.addEventListener('storage', (event) => {
-    if (event.key === 'settingsKey') {
-        getSettings()
-    }
-})
 
 function saveSettings() {
     if (plantNameEl.value && plantNoteEl.value && plantCategoryEl.value) {
@@ -224,7 +226,7 @@ function fernPlantsCheck() {
     return fernPlants
 }
 
-// NavBar Links to Scroll to Sections
+// NavBar links to scroll to sections on click
 document.getElementById('myGardenNavBar').addEventListener('click', function (event) {
     event.preventDefault()
     document.getElementById('myGardenSection').scrollIntoView({behavior: 'smooth'})
@@ -235,3 +237,58 @@ document.getElementById('addNavBar').addEventListener('click', function (event) 
     document.getElementById('addPlantsForm').scrollIntoView({behavior: 'smooth'})
 })
 
+
+// Filter plants by category
+function filterPlantsByCategory(category) {
+    return settingsArray.filter(plant => plant.category === category)
+}
+
+// Update UI to display plants of the selected category in the MyGarden section.
+function updateUIWithFilteredPlants(category) {
+    const filteredPlants = filterPlantsByCategory(category)
+    clearGarden()
+    // Loop through the filtered plants and create a new div element for each plant.
+    filteredPlants.forEach(plant => {
+        const infoDiv = createPlantDiv(plant)
+        document.getElementById('myGarden').appendChild(infoDiv)
+    })
+}
+
+// Event listeners for tab buttons.
+document.getElementById('allPlantsTab').addEventListener('click', function () {
+    updateMyGarden()
+    setActiveTabButton('allPlantsTab')
+})
+
+document.getElementById('succulentsTab').addEventListener('click', function () {
+    updateUIWithFilteredPlants('succulent')
+    setActiveTabButton('succulentsTab')
+})
+
+document.getElementById('fernsTab').addEventListener('click', function () {
+    updateUIWithFilteredPlants('fern')
+    setActiveTabButton('fernsTab')
+})
+
+document.getElementById('cactiTab').addEventListener('click', function () {
+    updateUIWithFilteredPlants('cactus')
+    setActiveTabButton('cactiTab')
+})
+
+document.getElementById('flowersTab').addEventListener('click', function () {
+    updateUIWithFilteredPlants('flowering')
+    setActiveTabButton('flowersTab')
+})
+
+function setActiveTabButton(tabId) {
+    // Get all classed tab buttons
+    const tabButtons = document.querySelectorAll('.tab-button')
+    // Loop through all tab buttons and add or remove the 'active' class depending on the tabId
+    tabButtons.forEach(button => {
+        if (button.id === tabId) {
+            button.classList.add('active')
+        } else {
+            button.classList.remove('active')
+        }
+    })
+}

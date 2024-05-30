@@ -30,11 +30,7 @@ function getSettings() {
             const combinedInfo = 'Plant Name: ' + newSetting.name + ', Plant Notes: ' + newSetting.notes + ', Plant Category: ' + newSetting.category
             updateMyGarden()
         })
-        console.log('Combined Plants: ', settingsArray)
-        cactusPlantsCheck()
-        succulentPlantsCheck()
-        flowerPlantsCheck()
-        fernPlantsCheck()
+        loggingPlants()
 
     } else {
         console.log("No settings found in localStorage.")
@@ -49,7 +45,8 @@ function updateMyGarden() {
     // Creates a Set to keep track of unique plant names and avoid duplicates
     const uniquePlantNames = new Set()
 
-    settingsArray.forEach(setting => {
+    // Loops through the settingsArray and creates a new div element for each plant.
+    settingsArray.forEach((setting, index) => {
         // Check if the plant name is already in the Set
         if (!uniquePlantNames.has(setting.name)) {
             // Add the plant name to the Set to mark it as seen
@@ -74,10 +71,18 @@ function updateMyGarden() {
             categoryDropDown.classList.add('mb-2', 'flex', 'items-end', 'justify-end')
             categoryDropDown.textContent = setting.category
 
+            // Create the delete button
+            const deleteButton = document.createElement('button')
+            deleteButton.classList.add('bg-green-500', 'px-4', 'py-2', 'rounded', 'text-white', 'font-semi-bold')
+            deleteButton.textContent = 'Delete'
+            deleteButton.addEventListener('click', () => deletePlant(index))
+
+
             // Appends the data to the infoDiv
             infoDiv.appendChild(nameHeading)
             infoDiv.appendChild(notesParagraph)
             infoDiv.appendChild(categoryDropDown)
+            infoDiv.appendChild(deleteButton)
 
             // Append the new div to the 'myGarden' div
             document.getElementById('myGarden').appendChild(infoDiv)
@@ -85,6 +90,22 @@ function updateMyGarden() {
     })
 }
 
+function deletePlant(index) {
+    settingsArray.splice(index, 1)
+    localStorage.setItem(settingsKey, JSON.stringify(settingsArray))
+    updateMyGarden()
+    loggingPlants()
+
+
+}
+
+function loggingPlants() {
+    console.log('Combined Plants: ', settingsArray)
+    cactusPlantsCheck()
+    succulentPlantsCheck()
+    flowerPlantsCheck()
+    fernPlantsCheck()
+}
 
 // Listen for changes to the 'localStorage' and adds them to the page.
 window.addEventListener('storage', (event) => {
@@ -117,11 +138,7 @@ function saveSettings() {
 
             // Updates UI with new plant information after ensuring it's not a duplicate.
             updateMyGarden()
-            console.log('Combined Plants: ', settingsArray)
-            cactusPlantsCheck()
-            succulentPlantsCheck()
-            flowerPlantsCheck()
-            fernPlantsCheck()
+            loggingPlants()
 
             plantNameEl.value = ""
             plantNoteEl.value = ""

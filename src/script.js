@@ -75,12 +75,15 @@ function createPlantDiv(setting, index) {
     const nameHeading = createElement('h3', ['text-lg', 'font-bold', 'mb-2'], setting.name)
     const notesParagraph = createElement('p', ['mb-2'], setting.notes)
     const categoryDropDown = createElement('p', ['mb-2', 'flex', 'items-end', 'justify-end'], setting.category)
+    const dateParagraph = createElement('p', ['mb-2', 'italic', 'text-gray-400', 'flex', 'justify-end'], setting.date)
+
     const deleteButton = createDeleteButton(index)
 
     // Appends the new elements to the infoDiv.
     infoDiv.appendChild(nameHeading)
     infoDiv.appendChild(notesParagraph)
     infoDiv.appendChild(categoryDropDown)
+    infoDiv.appendChild(dateParagraph)
     infoDiv.appendChild(deleteButton)
 
     return infoDiv
@@ -125,10 +128,13 @@ function loggingPlants() {
 
 function saveSettings() {
     if (plantNameEl.value && plantNoteEl.value && plantCategoryEl.value) {
+        // Gets the current date and stores it in a variable.
+        const currentDate = new Date()
         const newSetting = {
             name: plantNameEl.value,
             notes: plantNoteEl.value,
             category: plantCategoryEl.value,
+            date: currentDate.toLocaleDateString()
         }
 
         // Check if the plant is already in the settingsArray

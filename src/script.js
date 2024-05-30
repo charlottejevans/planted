@@ -39,64 +39,71 @@ function getSettings() {
 
 // Updates the UI with the new plant information by creating a new div element and appending the information to the infoDiv.
 function updateMyGarden() {
-    // Clears existing content and places value back to an empty string.
-    document.getElementById('myGarden').innerHTML = ""
-
-    // Creates a Set to keep track of unique plant names and avoid duplicates
+    clearGarden()
+    // Uses new set to ensure that the plant names are unique.
     const uniquePlantNames = new Set()
-
     // Loops through the settingsArray and creates a new div element for each plant.
     settingsArray.forEach((setting, index) => {
-        // Check if the plant name is already in the Set
+        // Checks to see if the plant name is unique.
         if (!uniquePlantNames.has(setting.name)) {
-            // Add the plant name to the Set to mark it as seen
             uniquePlantNames.add(setting.name)
-
-            // Create a new div element to hold the information
-            const infoDiv = document.createElement('div')
-            infoDiv.classList.add('bg-gray-100', 'rounded', 'p-4', 'text-gray-800', 'font-medium')
-
-            // Create a heading for the name
-            const nameHeading = document.createElement('h3')
-            nameHeading.classList.add('text-lg', 'font-bold', 'mb-2')
-            nameHeading.textContent = setting.name
-
-            // Creates a paragraph for the notes
-            const notesParagraph = document.createElement('p')
-            notesParagraph.classList.add('mb-2')
-            notesParagraph.textContent = setting.notes
-
-            // Creates a paragraph for the category
-            const categoryDropDown = document.createElement('p')
-            categoryDropDown.classList.add('mb-2', 'flex', 'items-end', 'justify-end')
-            categoryDropDown.textContent = setting.category
-
-            // Create the delete button
-            const deleteButton = document.createElement('button')
-            deleteButton.classList.add('bg-green-500', 'px-4', 'py-2', 'rounded', 'text-white', 'font-semi-bold')
-            deleteButton.textContent = 'Delete'
-            deleteButton.addEventListener('click', () => deletePlant(index))
-
-
-            // Appends the data to the infoDiv
-            infoDiv.appendChild(nameHeading)
-            infoDiv.appendChild(notesParagraph)
-            infoDiv.appendChild(categoryDropDown)
-            infoDiv.appendChild(deleteButton)
-
-            // Append the new div to the 'myGarden' div
+            // Creates a new div element for each plant.
+            const infoDiv = createPlantDiv(setting, index)
+            // Appends the infoDiv to the myGarden div.
             document.getElementById('myGarden').appendChild(infoDiv)
         }
     })
 }
+// Clears the garden by setting the innerHTML of the myGarden div to an empty string.
+function clearGarden() {
+    document.getElementById('myGarden').innerHTML = ""
+}
+
+// Creates a new div element for each plant and appends the plant name, notes, category, and a delete button to the div.
+function createPlantDiv(setting, index) {
+    const infoDiv = document.createElement('div')
+    infoDiv.classList.add('bg-gray-100', 'rounded', 'p-4', 'text-gray-800', 'font-medium')
+    // Creates new elements for the plant name, notes, and category.
+    const nameHeading = createElement('h3', ['text-lg', 'font-bold', 'mb-2'], setting.name)
+    const notesParagraph = createElement('p', ['mb-2'], setting.notes)
+    const categoryDropDown = createElement('p', ['mb-2', 'flex', 'items-end', 'justify-end'], setting.category)
+    const deleteButton = createDeleteButton(index)
+
+    // Appends the new elements to the infoDiv.
+    infoDiv.appendChild(nameHeading)
+    infoDiv.appendChild(notesParagraph)
+    infoDiv.appendChild(categoryDropDown)
+    infoDiv.appendChild(deleteButton)
+
+    return infoDiv
+
+}
+// Creates a new element with the specified tag, classes, and text content.
+function createElement(tag, classList, textContent) {
+    // Creates a new element with the specified tag.
+    const element = document.createElement(tag)
+    // Adds the classes from the classList array to the element.
+    classList.forEach(cls => element.classList.add(cls))
+
+    element.textContent = textContent
+    return element
+}
+
+function createDeleteButton(index) {
+    const deleteButton = document.createElement('button')
+    deleteButton.classList.add('bg-green-500', 'px-4', 'py-2', 'rounded', 'text-white', 'font-semi-bold')
+    deleteButton.textContent = 'Delete'
+    deleteButton.addEventListener('click', () => deletePlant(index))
+    return deleteButton
+}
 
 function deletePlant(index) {
+    // .splice() removes the plant from the settingsArray by its index.
     settingsArray.splice(index, 1)
+    // Updates the local storage with the new, modified settingsArray.
     localStorage.setItem(settingsKey, JSON.stringify(settingsArray))
     updateMyGarden()
     loggingPlants()
-
-
 }
 
 function loggingPlants() {
@@ -218,11 +225,13 @@ function fernPlantsCheck() {
 }
 
 // NavBar Links to Scroll to Sections
-document.getElementById('myGardenNavBar').addEventListener('click', function(event) {
+document.getElementById('myGardenNavBar').addEventListener('click', function (event) {
     event.preventDefault()
-    document.getElementById('myGardenSection').scrollIntoView({ behavior: 'smooth' })})
+    document.getElementById('myGardenSection').scrollIntoView({behavior: 'smooth'})
+})
 
-document.getElementById('addNavBar').addEventListener('click', function(event) {
+document.getElementById('addNavBar').addEventListener('click', function (event) {
     event.preventDefault()
-    document.getElementById('addPlantsForm').scrollIntoView({ behavior: 'smooth' })})
+    document.getElementById('addPlantsForm').scrollIntoView({behavior: 'smooth'})
+})
 
